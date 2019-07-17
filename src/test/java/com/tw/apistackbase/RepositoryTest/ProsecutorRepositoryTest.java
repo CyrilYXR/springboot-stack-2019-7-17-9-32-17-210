@@ -1,6 +1,5 @@
 package com.tw.apistackbase.RepositoryTest;
 
-import com.tw.apistackbase.Entity.Procuratorate;
 import com.tw.apistackbase.Entity.Prosecutor;
 import com.tw.apistackbase.Repository.ProsecutorRepository;
 import org.junit.Test;
@@ -29,5 +28,16 @@ public class ProsecutorRepositoryTest {
         //then
         Assertions.assertEquals(prosecutor.getName(), save.getName());
         Assertions.assertThrows(Exception.class, () -> prosecutorRepository.saveAndFlush(prosecutorNullName));
+    }
+
+    @Test
+    public void should_return_procurator_when_find_by_id(){
+        //given
+        Prosecutor prosecutor = new Prosecutor("pro");
+        Prosecutor save = prosecutorRepository.saveAndFlush(prosecutor);
+        //when
+        Prosecutor saved = prosecutorRepository.getOne(save.getId());
+        //then
+        Assertions.assertEquals(prosecutor.getName(), saved.getName());
     }
 }
