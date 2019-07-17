@@ -18,6 +18,18 @@ public class CriminalCase {
     @OneToOne(cascade = CascadeType.ALL)
     private DetailInfo detailInfo;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn
+    private Procuratorate procuratorate;
+
+    public Procuratorate getProcuratorate() {
+        return procuratorate;
+    }
+
+    public void setProcuratorate(Procuratorate procuratorate) {
+        this.procuratorate = procuratorate;
+    }
+
     public DetailInfo getDetailInfo() {
         return detailInfo;
     }

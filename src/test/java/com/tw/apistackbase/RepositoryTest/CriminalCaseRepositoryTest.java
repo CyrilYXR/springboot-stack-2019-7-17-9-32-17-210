@@ -2,6 +2,7 @@ package com.tw.apistackbase.RepositoryTest;
 
 import com.tw.apistackbase.Entity.CriminalCase;
 import com.tw.apistackbase.Entity.DetailInfo;
+import com.tw.apistackbase.Entity.Procuratorate;
 import com.tw.apistackbase.Repository.CriminalCaseRepository;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
@@ -110,6 +111,21 @@ public class CriminalCaseRepositoryTest {
         Assertions.assertEquals("case1", caseFetch.getName());
         Assertions.assertEquals(1970010123232323L, caseFetch.getTime().longValue());
         Assertions.assertEquals("o", caseFetch.getDetailInfo().getObjectiveElement());
+    }
+
+    @Test
+    public void should_return_case_with_procuratorate_when_add_and_fetch_case() {
+        //given
+        CriminalCase criminalCase = new CriminalCase("case1", 1970010123232323L);
+        Procuratorate procuratorate = new Procuratorate("proName");
+        criminalCase.setProcuratorate(procuratorate);
+        //when
+        CriminalCase caseSaved = caseRepository.saveAndFlush(criminalCase);
+        CriminalCase caseFetch = caseRepository.getOne(caseSaved.getId());
+        //then
+        Assertions.assertEquals("case1", caseFetch.getName());
+        Assertions.assertEquals(1970010123232323L, caseFetch.getTime().longValue());
+        Assertions.assertEquals("proName", caseFetch.getProcuratorate().getName());
     }
 
 }
