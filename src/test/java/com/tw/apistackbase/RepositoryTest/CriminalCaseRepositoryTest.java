@@ -85,4 +85,16 @@ public class CriminalCaseRepositoryTest {
         Assertions.assertEquals("case1", cases.get(1).getName());
     }
 
+    @Test
+    public void should_delete_case_when_delete_by_id(){
+        //given
+        CriminalCase case1 = caseRepository.saveAndFlush(new CriminalCase("case1", 1970010123232300L));
+        CriminalCase case2 = caseRepository.saveAndFlush(new CriminalCase("case2", 1970010123232300L));
+        //when
+        caseRepository.deleteById(case1.getId());
+        //then
+        Assertions.assertFalse(caseRepository.findById(case1.getId()).isPresent());
+        Assertions.assertEquals(1, caseRepository.findAll().size());
+    }
+
 }
