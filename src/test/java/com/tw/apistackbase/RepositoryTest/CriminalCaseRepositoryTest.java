@@ -68,4 +68,21 @@ public class CriminalCaseRepositoryTest {
         Assertions.assertEquals("case1", cases.get(1).getName());
     }
 
+    @Test
+    public void should_return_correct_cases_when_find_by_name(){
+        //given
+        CriminalCase criminalCase1 = new CriminalCase("case1", 1970010123232300L);
+        CriminalCase criminalCase2 = new CriminalCase("case1", 1970010123232323L);
+        CriminalCase criminalCase3 = new CriminalCase("case2", 1970010123232323L);
+        caseRepository.save(criminalCase1);
+        caseRepository.save(criminalCase2);
+        caseRepository.save(criminalCase3);
+        //when
+        List<CriminalCase> cases = caseRepository.findCriminalCaseByName("case1");
+        //then
+        Assertions.assertEquals(2,cases.size());
+        Assertions.assertEquals("case1", cases.get(0).getName());
+        Assertions.assertEquals("case1", cases.get(1).getName());
+    }
+
 }

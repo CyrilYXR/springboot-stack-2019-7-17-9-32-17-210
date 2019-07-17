@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface CriminalCaseRepository extends JpaRepository<CriminalCase, Long> {
     List<CriminalCase> findByOrderByTimeDesc();
+
+    List<CriminalCase> findCriminalCaseByName(String name);
 }
