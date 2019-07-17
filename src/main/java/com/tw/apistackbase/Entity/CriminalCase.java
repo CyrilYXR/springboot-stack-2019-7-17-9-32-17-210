@@ -15,6 +15,17 @@ public class CriminalCase {
     @Column(nullable = false)
     private Long time;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private DetailInfo detailInfo;
+
+    public DetailInfo getDetailInfo() {
+        return detailInfo;
+    }
+
+    public void setDetailInfo(DetailInfo detailInfo) {
+        this.detailInfo = detailInfo;
+    }
+
     public CriminalCase() {
     }
 
