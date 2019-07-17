@@ -30,4 +30,17 @@ public class DetailInfoRepositoryTest {
         Assertions.assertEquals(detailInfo.getSubjectiveElement(), save.getSubjectiveElement());
         Assertions.assertThrows(Exception.class, () -> detailInfoRepository.saveAndFlush(nullDetailInfo));
     }
+
+    @Test
+    public void should_return_a_detail_info_when_find_by_id(){
+        //given
+        DetailInfo detailInfo1 = new DetailInfo("subjective element","objective element");
+        DetailInfo detailInfo2 = new DetailInfo("subjective","objective");
+        DetailInfo detailInfo = detailInfoRepository.saveAndFlush(detailInfo1);
+        detailInfoRepository.saveAndFlush(detailInfo2);
+        //when
+        DetailInfo infoSaved = detailInfoRepository.getOne(detailInfo.getId());
+        //then
+        Assertions.assertEquals(detailInfo1.getSubjectiveElement(), infoSaved.getSubjectiveElement());
+    }
 }
