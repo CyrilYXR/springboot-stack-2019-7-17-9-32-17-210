@@ -32,4 +32,15 @@ public class ProcuratorateRepositoryTest {
         Assertions.assertThrows(Exception.class, () -> procuratorateRepository.saveAndFlush(procuratorate2));
         Assertions.assertThrows(Exception.class, () -> procuratorateRepository.saveAndFlush(procuratorate3));
     }
+
+    @Test
+    public void should_return_procuratorate_when_find_by_id(){
+        //given
+        Procuratorate procuratorate1 = new Procuratorate("pro");
+        Procuratorate save = procuratorateRepository.saveAndFlush(procuratorate1);
+        //when
+        Procuratorate saved = procuratorateRepository.getOne(save.getId());
+        //then
+        Assertions.assertEquals(procuratorate1.getName(), saved.getName());
+    }
 }
