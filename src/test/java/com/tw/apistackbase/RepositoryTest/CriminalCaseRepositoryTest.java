@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
@@ -26,6 +27,16 @@ public class CriminalCaseRepositoryTest {
         CriminalCase caseSaved = caseRepository.save(criminalCase);
         //then
         Assertions.assertEquals("case1", caseRepository.getOne(caseSaved.getId()).getName());
+    }
+
+    @Test
+    public void should_throw_exception_when_column_has_null(){
+        //given
+        CriminalCase criminalCase = new CriminalCase();
+        criminalCase.setName("case1");
+        //when
+        //then
+        Assertions.assertThrows(DataIntegrityViolationException.class, () -> caseRepository.saveAndFlush(criminalCase));
     }
 
 }
