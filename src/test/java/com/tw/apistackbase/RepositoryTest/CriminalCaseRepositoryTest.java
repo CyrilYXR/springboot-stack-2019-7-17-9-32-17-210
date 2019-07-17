@@ -1,6 +1,7 @@
 package com.tw.apistackbase.RepositoryTest;
 
 import com.tw.apistackbase.Entity.CriminalCase;
+import com.tw.apistackbase.Entity.DetailInfo;
 import com.tw.apistackbase.Repository.CriminalCaseRepository;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
@@ -95,6 +96,20 @@ public class CriminalCaseRepositoryTest {
         //then
         Assertions.assertFalse(caseRepository.findById(case1.getId()).isPresent());
         Assertions.assertEquals(1, caseRepository.findAll().size());
+    }
+
+    @Test
+    public void should_return_case_with_detail_info_when_add_and_fetch_case(){
+        //given
+        CriminalCase criminalCase = new CriminalCase("case1", 1970010123232323L);
+        criminalCase.setDetailInfo(new DetailInfo("s","o"));
+        //when
+        CriminalCase caseSaved = caseRepository.saveAndFlush(criminalCase);
+        CriminalCase caseFetch = caseRepository.getOne(caseSaved.getId());
+        //then
+        Assertions.assertEquals("case1", caseFetch.getName());
+        Assertions.assertEquals(1970010123232323L, caseFetch.getTime().longValue());
+        Assertions.assertEquals("o", caseFetch.getDetailInfo().getObjectiveElement());
     }
 
 }
