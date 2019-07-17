@@ -39,4 +39,16 @@ public class CriminalCaseRepositoryTest {
         Assertions.assertThrows(DataIntegrityViolationException.class, () -> caseRepository.saveAndFlush(criminalCase));
     }
 
+    @Test
+    public void should_return_case_when_find_by_id(){
+        //given
+        CriminalCase criminalCase = new CriminalCase("case1", 1970010123232323L);
+        CriminalCase caseSaved = caseRepository.save(criminalCase);
+        //when
+        CriminalCase aCase = caseRepository.getOne(caseSaved.getId());
+        //then
+        Assertions.assertEquals("case1", aCase.getName());
+        Assertions.assertEquals(1970010123232323L, aCase.getTime().longValue());
+    }
+
 }
